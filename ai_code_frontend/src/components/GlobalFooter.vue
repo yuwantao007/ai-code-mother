@@ -1,15 +1,37 @@
 <template>
-  <a-layout-footer class="global-footer">
-    原创项目 by 程序员鱼丸
+  <a-layout-footer class="footer">
+    <div class="footer-content">
+      <p class="copyright">
+        <a
+          href="https://www.codefather.cn"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="author-link"
+        >
+          程序员鱼丸涛
+        </a>
+      </p>
+    </div>
   </a-layout-footer>
 </template>
 
+<script setup lang="ts">
+// 无需额外的响应式数据
+</script>
+
 <style scoped>
-.global-footer {
-  padding: 16px 24px;
-  color: #6b7280;
+.footer {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(10px);
   text-align: center;
-  background: #ffffff;
-  border-top: 1px solid #edf0f5;
+  padding: 20px;
+  margin-top: 40px;
+  border-top: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.copyright {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
 }
 </style>

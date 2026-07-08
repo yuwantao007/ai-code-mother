@@ -1,12 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { message } from 'ant-design-vue'
-import UserLoginPage from '@/page/user/UserLoginPage.vue'
-import UserRegisterPage from '@/page/user/UserRegisterPage.vue'
-import UserLogoutPage from '@/page/user/UserLogoutPage.vue'
-import UserManagePage from '@/page/admin/UserManagePage.vue'
-import HomePage from '@/page/HomePage.vue'
-import { canAccess, ROLE_ENUM } from '@/access'
-import { useLoginUserStore } from '@/stores/loginUser'
+import HomePage from '@/pages/HomePage.vue'
+import UserLoginPage from '@/pages/user/UserLoginPage.vue'
+import UserRegisterPage from '@/pages/user/UserRegisterPage.vue'
+import UserManagePage from '@/pages/admin/UserManagePage.vue'
+import AppManagePage from '@/pages/admin/AppManagePage.vue'
+import AppChatPage from '@/pages/app/AppChatPage.vue'
+import AppEditPage from '@/pages/app/AppEditPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,78 +14,38 @@ const router = createRouter({
       path: '/',
       name: '主页',
       component: HomePage,
-      meta: {
-        title: '首页',
-      },
     },
     {
       path: '/user/login',
       name: '用户登录',
       component: UserLoginPage,
-      meta: {
-        hideInMenu: true,
-      },
     },
     {
       path: '/user/register',
       name: '用户注册',
       component: UserRegisterPage,
-      meta: {
-        hideInMenu: true,
-      },
-    },
-    {
-      path: '/user/logout',
-      name: '用户注销',
-      component: UserLogoutPage,
-      meta: {
-        hideInMenu: true,
-        requireLogin: true,
-      },
     },
     {
       path: '/admin/userManage',
       name: '用户管理',
       component: UserManagePage,
-      meta: {
-        title: '用户管理',
-        access: ROLE_ENUM.ADMIN,
-        requireLogin: true,
-      },
+    },
+    {
+      path: '/admin/appManage',
+      name: '应用管理',
+      component: AppManagePage,
+    },
+    {
+      path: '/app/chat/:id',
+      name: '应用对话',
+      component: AppChatPage,
+    },
+    {
+      path: '/app/edit/:id',
+      name: '编辑应用',
+      component: AppEditPage,
     },
   ],
-})
-
-router.beforeEach(async (to) => {
-  const loginUserStore = useLoginUserStore()
-
-  if (!loginUserStore.isFetched) {
-    await loginUserStore.fetchLoginUser()
-  }
-
-  const isLoginPage = to.path === '/user/login'
-  const isRegisterPage = to.path === '/user/register'
-  const isPublicPage = isLoginPage || isRegisterPage
-
-  if (to.meta.requireLogin && !loginUserStore.loginUser.id) {
-    return {
-      path: '/user/login',
-      query: {
-        redirect: to.fullPath,
-      },
-    }
-  }
-
-  if (!isPublicPage && !canAccess(loginUserStore.loginUser, to.meta.access as string | undefined)) {
-    message.error('无权限访问该页面')
-    return '/'
-  }
-
-  if ((isLoginPage || isRegisterPage) && loginUserStore.loginUser.id) {
-    return '/'
-  }
-
-  return true
 })
 
 export default router

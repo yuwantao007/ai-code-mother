@@ -1,56 +1,30 @@
-<script setup lang="ts">
-import { RouterView } from 'vue-router'
-import GlobalFooter from '@/components/GlobalFooter.vue'
-import GlobalHeader from '@/components/GlobalHeader.vue'
-</script>
-
 <template>
   <a-layout class="basic-layout">
+    <!-- 顶部导航栏 -->
     <GlobalHeader />
-    <a-layout-content class="layout-content">
-      <RouterView />
+    <!-- 主要内容区域 -->
+    <a-layout-content class="main-content">
+      <router-view />
     </a-layout-content>
+    <!-- 底部版权信息 -->
     <GlobalFooter />
   </a-layout>
 </template>
 
+<script setup lang="ts">
+import GlobalHeader from '@/components/GlobalHeader.vue'
+import GlobalFooter from '@/components/GlobalFooter.vue'
+</script>
+
 <style scoped>
-:global(html),
-:global(body),
-:global(#app) {
-  min-height: 100%;
-  margin: 0;
-}
-
-:global(body) {
-  font-family:
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    'Noto Sans',
-    sans-serif;
-  background: #f5f7fb;
-}
-
 .basic-layout {
-  min-height: 100vh;
-  background: #f5f7fb;
+  background: none;
 }
 
-.layout-content {
-  flex: 1;
+.main-content {
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px;
-}
-
-@media (max-width: 768px) {
-  .layout-content {
-    padding: 16px;
-  }
+  padding: 0;
+  background: none;
+  margin: 0;
 }
 </style>
