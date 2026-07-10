@@ -5,6 +5,7 @@ import com.mybatisflex.core.query.QueryWrapper;
 import com.mybatisflex.core.service.IService;
 import com.yuwan.ai_code_backend.exception.BusinessException;
 import com.yuwan.ai_code_backend.exception.ErrorCode;
+import com.yuwan.ai_code_backend.model.dto.app.AppAddRequest;
 import com.yuwan.ai_code_backend.model.dto.app.AppQueryRequest;
 import com.yuwan.ai_code_backend.model.entity.App;
 import com.yuwan.ai_code_backend.model.entity.User;
@@ -20,6 +21,14 @@ import java.util.List;
  * @author <a>程序员鱼丸涛</a>
  */
 public interface AppService extends IService<App> {
+    /**
+     * 创建应用
+     * @param appAddRequest
+     * @param loginUser
+     * @return
+     */
+    Long createApp(AppAddRequest appAddRequest, User loginUser);
+
     /**
      * 生成应用代码(流式)
      * @param appId
